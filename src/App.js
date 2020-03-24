@@ -1,22 +1,15 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Navbar from './componets/layout/Navbar';
-import Institutions from './componets/institutions/Institutions';
-import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './componets/pages/Home';
 import About from './componets/pages/About';
+import NotFound from './componets/pages/NotFound';
+import Navbar from './componets/layout/Navbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 class App extends Component {
   state = {
-    institutions: [],
-    loading: false
+    institutions: []
   };
-
-  //TODO: add Institutions API (go back to section 3.14)
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const res = await axios.get('Institutions API');
-    this.setState({ institutions: res.data, loading: false });
-  }
 
   render() {
     return (
@@ -24,19 +17,9 @@ class App extends Component {
         <div className='App'>
           <Navbar />
           <Switch>
-            <Route
-              exact
-              path='/'
-              render={props => (
-                <Fragment>
-                  <Institutions
-                    loading={this.state.loading}
-                    institutions={this.state.institutions}
-                  />
-                </Fragment>
-              )}
-            />
+            <Route exact path='/' component={Home} />
             <Route exact path='/About' component={About} />
+            <Route component={NotFound} />
           </Switch>
           <div className='container'></div>
         </div>
